@@ -1,3 +1,3 @@
 #!/usr/bin/python3
-for samuel in range(97, 123):
-    print("{0:s}".format(char(samuel)), end="")
+for cv in range(26):
+    print("{:s}".format(chr(97 + cv)), end="")
