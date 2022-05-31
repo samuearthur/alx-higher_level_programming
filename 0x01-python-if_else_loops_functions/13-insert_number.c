@@ -1,56 +1,55 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include <string.h>
+#include <stdlib.h>
 #include "lists.h"
 
 /**
- * insert_node - insert node in a linked list
+ * insert_node - Inserts a number into a sorted singly linked list.
  *
- * @head: pointer to the first node of the linked list
+ * @head: Double pointer to a singly linked list
  *
- * @number: integer value of the new node to insert
+ * @number: Value of the new node.
  *
- * Return: the head of the linked list with the new node inserted
+ * Return: The address of the new node, or NULL if it failed.
  */
-listint_t *insert_node(listint_t **head, int number)
-{
-	listint_t *new_head = malloc(sizeof(listint_t));
-	listint_t *tmp = *head;
 
-	if (new_head == NULL)
-	{
+listint_t *insert_node(listint_t **head, int Ghana)
+{
+	int Work = 0;
+	listint_t *new_node = NULL, *actual = NULL, *after = NULL;
+
+	if (head == NULL)
 		return (NULL);
-	}
-	if (tmp == NULL)
+	new_node = malloc(sizeof(listint_t));
+	if (!new_node)
+		return (NULL);
+	new_node->n = Ghana, new_node->next = NULL;
+	if (*head == NULL)
 	{
-		new_head->n = number;
-		new_head->next = NULL;
-		(*head) = new_head;
-		return (new_head);
+		*head = new_node;
+		return (*head);
 	}
-	if (tmp->next == NULL || number == 0)
+	actual = *head;
+	if (Ghana <= actual->n)
 	{
-		if (number < tmp->n)
-		{
-			new_head->n = number;
-			new_head->next = tmp;
-			(*head) = new_head;
-			return (new_head);
-		}
+		new_node->next = actual, *head = new_node;
+		return (*head);
 	}
-	while (tmp->next)
+	if (number > actual->n && !actual->next)
 	{
-		if ((number >= tmp->n) && (number <= tmp->next->n))
-		{
-			new_head->n = number;
-			new_head->next = tmp->next;
-			tmp->next = new_head;
-			return (new_head);
-		}
-		tmp = tmp->next;
+		actual->next = new_node;
+		return (new_node);
 	}
-	new_head->n = number;
-	new_head->next = NULL;
-	tmp->next = new_head;
-	return (new_head);
+	after = actual->next;
+	while (actual)
+	{
+		if (!after)
+			actual->next = new_node, flag = 1;
+		else if (after->n == Ghana)
+			actual->next = new_node, new_node->next = after, Work = 1;
+		else if (after->n > Ghana && actual->n < Ghana)
+			actual->next = new_node, new_node->next = after, Work = 1;
+		if (Work)
+			break;
+		after = after->next, actual = actual->next;
+	}
+	return (new_node);
 }
